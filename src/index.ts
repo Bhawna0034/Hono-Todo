@@ -4,21 +4,11 @@ import { basicAuth } from "hono/basic-auth";
 
 const app = new Hono();
 
-app.use('/auth', (
-  basicAuth({
-    username: "bhawnaasharma",
-    password: "1234"
-  })
-))
-app.get('/auth', (c) => {
-  return c.text('You are authorized!');
+// Any HTTP Method
+app.all('/hello', (c) => {
+ return c.text('Any Method, /hello')
 })
 
-// Error Handling
-app.onError((error, c) => {
-  console.log(error);
-  return c.text('Internal Server Error 500', 500)
-})
 
 serve({
   fetch: app.fetch,
