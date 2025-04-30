@@ -14,9 +14,10 @@ app.get('/auth', (c) => {
   return c.text('You are authorized!');
 })
 
-// Not Found
-app.notFound((c) => {
-  return c.text('404 Not Found', 404);
+// Error Handling
+app.onError((error, c) => {
+  console.log(error);
+  return c.text('Internal Server Error 500', 500)
 })
 
 serve({
