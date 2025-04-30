@@ -42,6 +42,21 @@ app.get('/profile/:id{[0-9]+}/:username{[a-z]+}', (c) => {
   return c.text(`${id} ${username}`);
 })
 
+// Chained route
+app
+   .get('/instagram', (c) => {
+      return c.text(`GET /instagram`)
+   })
+   .post((c) => {
+      return c.text('POST /instagram')
+   })
+   .put((c) => {
+      return c.text('PUT /instagram')
+   })
+   .delete((c) => {
+      return c.text('DELETE /instagram')
+   })
+
 serve({
   fetch: app.fetch,
   port: 3000,
