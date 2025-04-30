@@ -14,6 +14,11 @@ app.on(['PUT', 'DELETE'], '/posts', (c) => {
    return c.text('PUT or Delete /posts');
 })
 
+// Multiple Paths
+app.on('GET', ['/hello', '/foo/hello', '/boo/hello'], (c) => {
+  return c.text('Hello Multiple Paths');
+})
+
 serve({
   fetch: app.fetch,
   port: 3000,
