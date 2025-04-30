@@ -36,6 +36,13 @@ app.post('/posts', async(c) => {
 
 })
 
+// Delete HTTP Method
+app.delete('/posts/:id', (c) => {
+  const id = c.req.param('id');
+  return c.text(`Post with ${id} is deleted Successfully` );
+
+})
+
 serve({
   fetch: app.fetch,
   port: 3000
