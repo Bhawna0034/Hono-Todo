@@ -36,6 +36,12 @@ app.get('/profile/:id/:bio?', (c) => {
   return c.text(`Id: ${id} ${bio}`);
 })
 
+// RegExp
+app.get('/profile/:id{[0-9]+}/:username{[a-z]+}', (c) => {
+  const {id, username} = c.req.param();
+  return c.text(`${id} ${username}`);
+})
+
 serve({
   fetch: app.fetch,
   port: 3000,
