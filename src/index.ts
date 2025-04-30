@@ -14,6 +14,11 @@ app.get('/auth', (c) => {
   return c.text('You are authorized!');
 })
 
+// Not Found
+app.notFound((c) => {
+  return c.text('404 Not Found', 404);
+})
+
 serve({
   fetch: app.fetch,
   port: 3000,
