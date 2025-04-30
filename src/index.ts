@@ -25,6 +25,17 @@ app.get('/posts/:id', (c) => { // This defines a GET route that includes a dynam
   return c.text(`You want to see ${page} with this ${id}`); // This sends a plain text response using the values from page and id.
 })
 
+// Post HTTP Method
+app.post('/posts', async(c) => {
+  const body = await c.req.json(); // Reads the incoming JSON body of the request
+  return c.json({
+    ok: true,
+    message: "Post created successfully",
+    data: body
+  })
+
+})
+
 serve({
   fetch: app.fetch,
   port: 3000
