@@ -43,6 +43,17 @@ app.delete('/posts/:id', (c) => {
 
 })
 
+// Put HTTP Method
+app.put('/posts/:id', async(c) => {
+  const body = await c.req.json();
+  const {title, username} = body;
+  return c.json({
+    ok: true,
+    message: "Post Updated Successfully",
+    data: {title, username}
+  })
+})
+
 serve({
   fetch: app.fetch,
   port: 3000
