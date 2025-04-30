@@ -19,6 +19,12 @@ app.on('GET', ['/hello', '/foo/hello', '/boo/hello'], (c) => {
   return c.text('Hello Multiple Paths');
 })
 
+// Path Parameter
+app.get('/profile/:username', (c) => {
+  const username = c.req.param('username');
+  return c.text(`Profile: ${username}`);
+})
+
 serve({
   fetch: app.fetch,
   port: 3000,
