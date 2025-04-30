@@ -9,6 +9,10 @@ app.all('/hello', (c) => {
  return c.text('Any Method, /hello')
 })
 
+// Multiple Method
+app.on(['PUT', 'DELETE'], '/posts', (c) => {
+   return c.text('PUT or Delete /posts');
+})
 
 serve({
   fetch: app.fetch,
