@@ -25,6 +25,17 @@ app.get('/profile/:username', (c) => {
   return c.text(`Profile: ${username}`);
 })
 
+app.get('/profile/:id/comment/:comment_id', (c) => {
+  const {id, comment_id} = c.req.param();
+  return c.text(`Id: ${id}, Comment Id: ${comment_id}`);
+})
+
+// Optional Paramter
+app.get('/profile/:id/:bio?', (c) => {
+  const {id, bio} = c.req.param();
+  return c.text(`Id: ${id} ${bio}`);
+})
+
 serve({
   fetch: app.fetch,
   port: 3000,
