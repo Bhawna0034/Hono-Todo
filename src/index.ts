@@ -54,9 +54,16 @@ app.put('/posts/:id', async(c) => {
   })
 })
 
+// Return Response
+app.get('/hello', (c) => {
+  return c.newResponse('Good Morning!');
+})
+
+
 serve({
   fetch: app.fetch,
   port: 3000
 }, (info) => {
   console.log(`Server is running on http://localhost:${info.port}`)
 })
+
