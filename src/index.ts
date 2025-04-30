@@ -7,6 +7,13 @@ app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
+app.get('/api/hello', (c) => {
+  return c.json({
+    ok: true,
+    message: 'Hello World!',
+  })
+});
+
 serve({
   fetch: app.fetch,
   port: 3000
