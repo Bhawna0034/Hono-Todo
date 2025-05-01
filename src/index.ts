@@ -21,6 +21,19 @@ app.post("/todos", async(c) => {
   return c.json(newTodo);
 })
 
+// Get Todo By Id
+app.get("/todos/:id", (c) => {
+  const id = Number(c.req.param('id'));
+  const todoById = Todos.find((todo) => todo.id === id)
+  if(!todoById){ 
+    return c.json({
+      message: "Not Found"
+    }, 404)
+  }
+  return c.json(todoById);
+
+})
+
 
 
 serve({
