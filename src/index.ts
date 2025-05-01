@@ -49,6 +49,14 @@ app.delete("/todos/:id", (c) => {
   })
 })
 
+// Delete Todo
+app.delete("/todos", (c) => {
+  Todos=[];
+  return c.json("All Todos have been deleted successfully!")
+})
+
+
+
 
 
 serve({
