@@ -26,9 +26,7 @@ app.get("/todos/:id", (c) => {
   const id = Number(c.req.param('id'));
   const todoById = Todos.find((todo) => todo.id === id)
   if(!todoById){ 
-    return c.json({
-      message: "Not Found"
-    }, 404)
+    return c.notFound();
   }
   return c.json(todoById);
 
@@ -53,6 +51,19 @@ app.delete("/todos/:id", (c) => {
 app.delete("/todos", (c) => {
   Todos=[];
   return c.json("All Todos have been deleted successfully!")
+})
+
+// Edit Todo By Id
+app.put("/todos/:id", async(c) => {
+  const id = Number(c.req.param('id'));
+  const body = await c.req.json();
+  const TodoById = Todos.find((todo) => todo.id === id);
+  if(!TodoById) {
+    return c.notFound();
+  }
+  TodoById.title = body.title ?? TodoById.title
+  TodoById.isCompleted = body.isCompleted ?? TodoById.isCompleted
+  return c.json(TodoById)
 })
 
 
