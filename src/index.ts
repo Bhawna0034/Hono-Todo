@@ -34,6 +34,21 @@ app.get("/todos/:id", (c) => {
 
 })
 
+// Delete Todo By Id
+app.delete("/todos/:id", (c) => {
+  const id = Number(c.req.param('id'));
+  const todoExists = Todos.some((todo) => todo.id === id);
+  if(!todoExists){
+    return c.json({
+      message: `Todo with id ${id} is not Found`
+    }, 404)
+  }
+  Todos = Todos.filter((todo) => todo.id !== id);
+  return c.json({
+    message: `Todo with id ${id} is deleted successfully!`
+  })
+})
+
 
 
 serve({
