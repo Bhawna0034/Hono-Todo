@@ -26,7 +26,9 @@ app.get("/todos/:id", (c) => {
   const id = Number(c.req.param('id'));
   const todoById = Todos.find((todo) => todo.id === id)
   if(!todoById){ 
-    return c.notFound();
+    return c.json({
+      message: `Todo with id ${id} not Found!`
+    }, 404)
   }
   return c.json(todoById);
 
@@ -59,15 +61,14 @@ app.put("/todos/:id", async(c) => {
   const body = await c.req.json();
   const TodoById = Todos.find((todo) => todo.id === id);
   if(!TodoById) {
-    return c.notFound();
+    return c.json({
+      message: `Todo with id ${id} not Found!`
+    }, 404)
   }
   TodoById.title = body.title ?? TodoById.title
   TodoById.isCompleted = body.isCompleted ?? TodoById.isCompleted
   return c.json(TodoById)
 })
-
-
-
 
 
 serve({
