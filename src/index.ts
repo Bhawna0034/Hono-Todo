@@ -1,10 +1,37 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
-import type { Todo } from "./types.js";
+import { HTTPException } from 'hono/http-exception'
+import type { Todo, User } from "./types.js";
+
 
 const app = new Hono();
 
 let Todos:Todo[] = [];
+let Users: User[] = [];
+
+// Signup
+app.post("/signup", async(c) => {
+  const {email, password} = await c.req.json();
+  if(!email || !password){
+    throw new HTTPException(400, {message: "Email and Password are required"});
+  }
+  
+  const isUserExists = Users.find((user) => user.email === email);
+  if(isUserExists){
+     throw new HTTPException(409, {message: "User already exists"})
+  }
+  const newUser:User = {
+    email: email,
+    password: password
+  };
+  Users.push(newUser);
+  return c.json({
+    message: "User registerd Successfully!",
+    data: {email}
+  }, 201);
+
+
+})
 
 // Get All Todo
 app.get("/todos", (c) => c.json(Todos))
