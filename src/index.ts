@@ -6,6 +6,7 @@ import { logger } from 'hono/logger'
 import jwt from 'jsonwebtoken'
 import type { Todo, User } from "./types.js";
 import type { Context } from "hono";
+import brcypt from 'bcrypt'
 import { auth } from "hono/utils/basic-auth";
 
 const app = new Hono();
@@ -26,10 +27,12 @@ app.post("/signup", async (c) => {
   if (isUserExists) {
     throw new HTTPException(409, { message: "User already exists!" });
   }
+
+  const securePassword = await brcypt.hash(password, 10);
   const newUser: User = {
     id: Date.now(),
     email,
-    password: password,
+    password: securePassword,
   };
   Users.push(newUser);
   return c.json(
@@ -48,7 +51,7 @@ app.post("/login", async(c) => {
   if(!user){
     throw new HTTPException(401, {message: "Invalid email and password"});
   }
-  const passwordMatched = user.password === password;
+  const passwordMatched = await brcypt.compare(password, user.password);
   if(!passwordMatched){
     throw new HTTPException(401, {message: "Password Do not Match!"});
   }
@@ -98,7 +101,6 @@ app.post("/todos", authMiddleware, async (c) => {
   if (!body.title) {
     throw new HTTPException(400, { message: "Task is required" });
   }
-
   const newTodo: Todo = {
     id: Date.now(),
     title: body.title,
